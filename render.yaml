@@ -1,13 +1,16 @@
-node_modules/
-backend/node_modules/
-frontend/node_modules/
-frontend/build/
-backend/.env
-*.pth
-chatbot_model
-chatbot_modelsave
-newsave_model
-*.pyc
-__pycache__/
-.DS_Store
-.env.local
+services:
+  - type: web
+    name: healtho-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: PORT
+        value: 5000
+
+  - type: web
+    name: healtho-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/build
