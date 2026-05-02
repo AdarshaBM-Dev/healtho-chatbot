@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import "./App.css";
 
 function App() {
   const [msg, setMsg] = useState("");
   const [chat, setChat] = useState([]);
 
   const send = async () => {
-    const res = await fetch("/chat", {
+    if (!msg) return;
+
+    const res = await fetch("https://healtho-backend-bfvt.onrender.com/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -20,18 +23,26 @@ function App() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Healtho Chatbot</h2>
+    <div className="app">
+      <h1 className="title">🩺 Healtho AI Doctor</h1>
 
-      {chat.map((c, i) => (
-        <div key={i}>
-          <p><b>You:</b> {c.user}</p>
-          <p><b>Bot:</b> {c.bot}</p>
-        </div>
-      ))}
+      <div className="chat-box">
+        {chat.map((c, i) => (
+          <div key={i}>
+            <div className="user-msg">{c.user}</div>
+            <div className="bot-msg">{c.bot}</div>
+          </div>
+        ))}
+      </div>
 
-      <input value={msg} onChange={e => setMsg(e.target.value)} />
-      <button onClick={send}>Send</button>
+      <div className="input-box">
+        <input
+          value={msg}
+          onChange={(e) => setMsg(e.target.value)}
+          placeholder="Describe your symptoms..."
+        />
+        <button onClick={send}>Send</button>
+      </div>
     </div>
   );
 }
