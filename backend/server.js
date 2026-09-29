@@ -6,7 +6,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Healtho Backend Running ✅");
+  res.send("Healtho Backend Running ✅");    
 });
 
 app.post("/chat", (req, res) => {
